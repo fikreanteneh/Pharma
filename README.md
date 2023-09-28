@@ -1,1 +1,2 @@
-# Pharma
+Figma Link: 
+ENTITY RELATIONSHIP DIAGRAM:

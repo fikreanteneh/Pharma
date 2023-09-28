@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "dyclnkCrMgkwtHwjp04u0RSqElvTy1NDvmrq5UMUXmYuq64RP4UXIUVUvqiIg2YUrNeez6WWxbfX9M0j2ghQaQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\fikre\\OneDrive\\Desktop\\Projects\\Pharma\\PharmaBackend\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\fikre\\.nuget\\packages\\nettopologysuite\\2.5.0\\nettopologysuite.2.5.0.nupkg.sha512",
+    "C:\\Users\\fikre\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512"
+  ],
+  "logs": []
+}
