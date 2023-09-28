@@ -6,6 +6,8 @@ const buttonColor = {
   2: tw`bg-red-600 hover:bg-red-700`,
 };
 
+// yess
+
 type PButtonProb = {
   level: 1 | 2;
   disabled?: boolean;
