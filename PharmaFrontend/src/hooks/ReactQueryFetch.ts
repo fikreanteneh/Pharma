@@ -1,18 +1,27 @@
-import { BaseResponseType } from "../state/types/requestTypes";
+import { BaseResponseType } from "../models/Response";
 
-
-const handleRequest = async <T>(
+const ReactQueryFetch = async <T>(
   requestCallback: () => Promise<BaseResponseType<T>>
-): Promise<BaseResponseType<T>> => {
-  try {
-    const response = await requestCallback();
-    if (!response.success) {
-      throw new Error(response.errors.join('\n'));
-    }
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+): Promise<T> => {
+  const response: BaseResponseType<T> = await requestCallback();
+  if (response.message) return response.message;
+  throw Error(response.error ?? "Something went wrong");
 };
 
-export default handleRequest;
+export const handleGetDirectRequest = async <T>(
+  requestCallback: () => Promise<T>
+): Promise<T> => {
+  const response = await requestCallback();
+  return response;
+};
+
+
+export const handleUpdateRequest = async<T>(
+  requestCallback: () => Promise<T>
+): Promise<T> => {
+  const response = await requestCallback();
+  return response;
+}
+
+
+export default ReactQueryFetch;

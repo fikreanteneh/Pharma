@@ -1,4 +1,4 @@
-import useAuth from "../state/store/useAuth"
+import useAuth from "../store/UseAuth";
 
 
 
@@ -6,8 +6,6 @@ const LandingPage = () => {
 
     const authStatus = useAuth(state => state.authState.status)
     const signout = useAuth(state => state.signout)
-
-
 
     function signOut() {
         signout();

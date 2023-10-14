@@ -1,10 +1,10 @@
 
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import { ChangeEvent, useState } from 'react';
 import { toast } from "react-toastify";
 import * as yup from 'yup';
-import useMedicine from "../state/store/useMedicine";
 // import Spinner from "./Spinner";
+import MedicineRepository from '../repositories/MedicineRepository';
 
 
 type RegisterMedicineProp = {
@@ -14,9 +14,10 @@ type RegisterMedicineProp = {
 
 const RegisterMedicine = (prop: RegisterMedicineProp) => {
 
-    const { addMedicine, medicineState, resetFailed } = useMedicine();
+    // const { addMedicine, medicineState, resetFailed } = useMedicine();
 
-    const [formData, setFormData] = useState({ "name": "", "amharicName": "" })
+
+    const [formData, setFormData] = useState({ "name": "", "exactname": "", "amount": 0 })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target
@@ -25,8 +26,9 @@ const RegisterMedicine = (prop: RegisterMedicineProp) => {
 
     const schema = yup.object().shape({
 
-        name: yup.string().min(5, 'Minimum Length is %').required('Name is required'),
-        amharicName: yup.string().min(5, 'Minimum Length is %').required('Amharic Name is required'),
+        name: yup.string().min(5, 'Minimum Length is %').required('Generic Name is required'),
+        exactname: yup.string().min(5, 'Minimum Length is %').required('Full Name is required'),
+        amount: yup.number().min(1, 'Minimum Length is %').required('Amount is required'),
     });
 
 
@@ -34,22 +36,14 @@ const RegisterMedicine = (prop: RegisterMedicineProp) => {
         e.preventDefault()
         schema.validate(formData)
             .then(async () => {
-                await addMedicine({
-                    name: formData.name,
-                    amharicName: formData.amharicName,
-
-                })
+                formData.amount = parseFloat(formData.amount.toString())
+                const res = await MedicineRepository.addMedicine(formData)
+                res.success ? toast.success("Registerd Successfully") : toast.error(res.error)
             })
             .catch(err => {
                 toast.error(err.message)
             })
     }
-    if (medicineState.status == 'loading') return <CircularProgress />
-    else if (medicineState.status == 'failed') {
-        toast.error(medicineState.error[0])
-        resetFailed()
-    }
-
     return (
         <>
             <Dialog open={prop.open} onClose={prop.handleToggle}>
@@ -59,7 +53,8 @@ const RegisterMedicine = (prop: RegisterMedicineProp) => {
                 <DialogContent>
                     <DialogContentText>Fill the neccessary options</DialogContentText>
                     <TextField onChange={handleChange} value={formData.name} autoFocus margin="dense" id="name" label="Name" placeholder="Amoxylin" type="text" fullWidth variant="standard" />
-                    <TextField onChange={handleChange} value={formData.amharicName} autoFocus margin="dense" id="amharicName" label="Amharic Name" placeholder="Amoxyxylin" type="text" fullWidth variant="standard" />
+                    <TextField onChange={handleChange} value={formData.exactname} autoFocus margin="dense" id="exactname" label="Full Name" placeholder="Amoxyxylin" type="text" fullWidth variant="standard" />
+                    <TextField onChange={handleChange} value={formData.amount} autoFocus margin="dense" id="amount" label="Amount" placeholder="Amoxylin" type="number" fullWidth variant="standard" />
                 </DialogContent>
 
                 <DialogActions>

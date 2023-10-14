@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { Body } from '../../styles'
 import AdminHeader from '../components/AdminHeader'
+import { Body } from '../styles'
 
 const AdminRoot = () => {
     return (

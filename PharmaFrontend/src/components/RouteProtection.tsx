@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
+import useAuth from "../store/UseAuth"
 import Spinner from "./Spinner"
-import { toast } from "react-toastify"
-import useAuth from "../state/store/useAuth"
 
 type PrivateRouteProp = {
   routeType: "" | "pharmacy" | "admin"
@@ -15,7 +14,7 @@ const RouteProtection: React.FC<PrivateRouteProp> = ({ routeType }) => {
     return <Spinner />
   }
 
-  
+
 
   return authState.userRole == routeType ? <Outlet /> : <Navigate to={`/${authState.userRole}`} />
 

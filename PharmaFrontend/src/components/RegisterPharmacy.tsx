@@ -1,9 +1,8 @@
 
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import { ChangeEvent, useState } from 'react';
 import { toast } from "react-toastify";
 import * as yup from 'yup';
-import useAdminPharmacy from "../state/store/useAdminPharmacy";
 // import Spinner from "./Spinner";
 
 
@@ -14,7 +13,7 @@ type RegisterPharmacyProp = {
 
 const RegisterPharmacy = (prop: RegisterPharmacyProp) => {
 
-    const { addPharmacy, pharmacyState, resetFailed } = useAdminPharmacy();
+    // const { addPharmacy, pharmacyState, resetFailed } = useAdminPharmacy();
 
     const [formData, setFormData] = useState({ "email": "", "password": "", "name": "", "lattitude": 10, "longitude": 40, "cemail": "", "cphoneNumber": "" })
 
@@ -38,27 +37,27 @@ const RegisterPharmacy = (prop: RegisterPharmacyProp) => {
         e.preventDefault()
         schema.validate(formData)
             .then(async () => {
-                await addPharmacy({
-                    name: formData.name,
-                    email: formData.email,
-                    password: formData.password,
-                    address: {
-                        lattitude: formData.lattitude,
-                        longitude: formData.longitude,
-                    },
-                    phoneNumbers: [formData.cphoneNumber],
-                    emails: [formData.cemail]
-                })
+                // await addPharmacy({
+                //     name: formData.name,
+                //     email: formData.email,
+                //     password: formData.password,
+                //     address: {
+                //         lattitude: formData.lattitude,
+                //         longitude: formData.longitude,
+                //     },
+                //     phoneNumbers: [formData.cphoneNumber],
+                //     emails: [formData.cemail]
+                // })
             })
             .catch(err => {
                 toast.error(err.message)
             })
     }
-    if (pharmacyState.status == 'loading') return <CircularProgress />
-    else if (pharmacyState.status == 'failed') {
-        toast.error(pharmacyState.error)
-        resetFailed()
-    }
+    // if (pharmacyState.status == 'loading') return <CircularProgress />
+    // else if (pharmacyState.status == 'failed') {
+    //     toast.error(pharmacyState.error)
+    //     resetFailed()
+    // }
 
     return (
         <>

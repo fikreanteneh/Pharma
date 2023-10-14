@@ -1,8 +1,7 @@
-import { NavLink, useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../assets';
 
-import * as S from './../../styles';
+import * as S from '../styles';
 
 export const AdminHeader = () => {
 

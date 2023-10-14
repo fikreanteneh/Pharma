@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Outlet, Route } from "react-router-dom";
 import LandingRoot from "./layout/LandingRoot";
 import LandingPage from "./pages/LandingPage";
 import Signin from "./pages/Signin";
@@ -22,18 +22,27 @@ const Router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<LandingRoot />}>
+
         <Route index element={<LandingPage />} />
-        <Route path='medicines' element={<CustomerMedicine />}>
-          <Route path=':id' element={<CustomerMedicineDetail />} />
+
+        <Route path="medicines" element={<Outlet />}>
+          <Route index element={<CustomerMedicine />} />
+          <Route path=":medicineid" element={<CustomerMedicineDetail />} />
         </Route>
-        <Route path='pharmacies' element={<CutomerPharmacy />}>
-          <Route path=':id' element={<CustomerPharmacyDetail />} />
+
+        <Route path='pharmacies' element={<Outlet/>}>
+          <Route index element={<CutomerPharmacy />} />
+          <Route path=':pharmacid' element={<CustomerPharmacyDetail />} />
         </Route>
+        
         <Route path='about' element={<CutomerPharmacy />} />
+
         <Route path='contact' element={<CutomerPharmacy />} />
+
         <Route element={<RouteProtection routeType={""} />}>
           <Route path='signin' element={<Signin />} />
         </Route>
+
       </Route>
 
       <Route path='/pharmacy' element={<PharmacyRoot />} >

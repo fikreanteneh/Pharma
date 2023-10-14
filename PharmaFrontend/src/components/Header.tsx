@@ -1,9 +1,8 @@
-import { NavLink, useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Logo } from '../assets';
 
-import * as S from './../../styles';
-import useAuth from '../state/store/useAuth';
+import useAuth from '../store/UseAuth';
+import * as S from '../styles';
 
 export const Header = () => {
 
@@ -21,6 +20,7 @@ export const Header = () => {
             <S.NavItem>
 
                 <NavLink to={`/medicines`} >
+                    {/* <LocalHospitalOutlinedIcon /> */}
                     <S.LinkText active={location.pathname == "/medicines"}>Medicines</S.LinkText>
                 </NavLink>
 

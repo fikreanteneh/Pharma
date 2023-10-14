@@ -2,7 +2,10 @@ import React from 'react'
 
 const PharamcyProfile = () => {
   return (
-    <div>PharamcyProfile</div>
+    <div>
+      <h1>My Profile</h1>
+      <></>
+    </div>
   )
 }
 

@@ -1,46 +1,30 @@
-import { useQuery } from "@tanstack/react-query"
-import { getMedicineRequest } from "../state/request/medicineRequest"
-import UsePage from "../hooks/PageHook";
-import UseSearch from "../hooks/SearchHook";
-import handleRequest from "../hooks/ReactQueryFetch";
-import { BaseResponseType } from "../state/types/requestTypes";
+import { Button } from "@mui/material";
+// import { useSearchParams } from 'react-router-dom';
+import MedicineCard from "../components/MedicineCard";
 import Spinner from "../components/Spinner";
-import { toast } from "react-toastify";
-import { Medicine } from "../state/types/medicineTypes";
-import MedicineCard from './../components/MedicineCard';
+import UseMedicine from "../store/UseMedicine";
+import UseParameter from "../hooks/UseParameter";
 
 const CustomerMedicine = () => {
-
-  const [pageNumber, changePageNumber, pageSize, changePageSize] = UsePage();
-  const [search, changeSeacrh] = UseSearch();
-
-
-  const { isLoading, error, data } = useQuery(
-    ['Medicine', pageNumber, pageSize, search],
-    () => handleRequest(() => getMedicineRequest(pageNumber, pageSize, search))
-
-  );
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  console.log("NOOOOO", data)
-  if (error) {
-    toast.error(error.message)
-  }
+  
+  const [searchParams, changeSearchParam] = UseParameter();
+  const pageNumber = searchParams.get("pageNumber") ? Number(searchParams.get("pageNumber")) : 0
+  const pageSize = searchParams.get("pageSize") ? Number(searchParams.get("pageSize")) : 15
+  const [data, isLoading, isError] = UseMedicine(pageNumber, pageSize)
 
   return (
-    <div>
-      <ul>
-        {data?.message?.map((medicine: Medicine) => (
-          <li key={medicine.id}>
-            <MedicineCard medicine={medicine} />
-          </li>
-        )
-        )}
-      </ul>
-    </div>
+    <>
+      {isLoading && <Spinner />}
+      {!isError && !isLoading &&
+        <div>
+          {data?.map((medicine) => {
+            return <MedicineCard medicine={medicine} key={medicine.id} />
+          })}
+          <Button disabled={pageNumber == 0} onClick={() => { changeSearchParam("pageNumber", pageNumber - 1) }} >Back</Button>
+          <Button disabled={data?.length != pageSize} onClick={() => { changeSearchParam("pageNumber", pageNumber + 1) }}>Next</Button>
+        </div>}
+
+    </>
   )
 }
 

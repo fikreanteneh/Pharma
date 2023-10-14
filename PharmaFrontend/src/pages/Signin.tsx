@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from 'react'
-import AuthBackground from '../assets/images/Premium Vector _ The doctor and patient distance consulting of treatment on a smartphone concept_.jpeg'
-import { Link } from 'react-router-dom'
-import * as S from '../../styles';
-import * as yup from 'yup';
-import * as T from '../types';
+import { ChangeEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import useAuth from '../state/store/useAuth';
+import * as yup from 'yup';
+import AuthBackground from '../assets/images/Premium Vector _ The doctor and patient distance consulting of treatment on a smartphone concept_.jpeg';
+import { AuthRequest } from '../models/Auth';
+import useAuth from '../store/UseAuth';
+import * as S from '../styles';
 
 
 export const Signin = () => {
@@ -20,9 +20,9 @@ export const Signin = () => {
     });
 
 
-    const [formData, setFormData] = useState<T.SignIn>({ email: "", password: "" })
+    const [formData, setFormData] = useState<AuthRequest>({ email: "", password: "" })
 
-    let showPassword = false;
+    const showPassword = false;
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target
@@ -41,7 +41,7 @@ export const Signin = () => {
     }
 
     if (authState.status == "failed") {
-        toast.error(authState.error[0])
+        toast.error(authState.error)
         resetAuthFailed()
     }
 
@@ -71,7 +71,7 @@ export const Signin = () => {
                         </S.InputField>
 
                         <S.BetweenFlex>
-                            <p>Dont have an account? <Link to='/signup' className='text-blue-500 hover:text-blue-800'>Register</Link></p>
+                            {/* <p>Dont have an account? <Link to='/signup' className='text-blue-500 hover:text-blue-800'>Register</Link></p> */}
                             <p><Link to="/resetpassword" className='text-blue-500 hover:text-blue-800'> Forgot Password?</Link></p>
                         </S.BetweenFlex>
                         <S.PButton level={1} type='submit' onClick={(e) => handleSubmit(e)}>Sign In</S.PButton>
