@@ -3,14 +3,14 @@ import ReactQueryFetch from '../hooks/ReactQueryFetch';
 import { Medicine } from '../models/Medicine';
 import MedicineRepository from '../repositories/MedicineRepository';
 
-const UseMedicine = (pageNumber: number, pageSize: number,): [
+const UseMedicine = (pageNumber: number, pageSize: number, name: string): [
     Medicine[] | undefined,
     boolean,
     boolean] => {
 
     const { data, isLoading, isError } = useQuery(
         ['Medicine', pageNumber, pageSize],
-        () => ReactQueryFetch(() => MedicineRepository.searchMedicine({ pageNumber, pageSize, name: "" })))
+        () => ReactQueryFetch(() => MedicineRepository.getMedicine({ pageNumber, pageSize, search: name })))
 
     return [data, isLoading, isError]
 

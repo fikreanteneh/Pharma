@@ -3,7 +3,7 @@
 export type SearchMedicineRequest = {
   pageNumber: number;
   pageSize: number;
-  name: string;
+  search: string;
 };
 export type GetMedicineByIdRequest = {
   id: number;
@@ -17,13 +17,13 @@ export type AddMedicineRequest = {
   name: string;
   exactname: string;
   amount: number;
-}
+};
 
 //Pharmacy Request
 export type SearchPharmacyRequest = {
   pageNumber: number;
   pageSize: number;
-  name: string;
+  search: string;
 };
 
 export type GetPharmacyByIdRequest = {

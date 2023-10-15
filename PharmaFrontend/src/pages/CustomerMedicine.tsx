@@ -2,18 +2,26 @@ import { Button } from "@mui/material";
 // import { useSearchParams } from 'react-router-dom';
 import MedicineCard from "../components/MedicineCard";
 import Spinner from "../components/Spinner";
-import UseMedicine from "../store/UseMedicine";
 import UseParameter from "../hooks/UseParameter";
+import UseMedicine from "../store/UseMedicine";
+import UseSearchMedicine from "../store/UseSearchMedicine";
+import SearchBar from './../components/SearchBar';
+import { useState } from "react";
 
 const CustomerMedicine = () => {
-  
+
   const [searchParams, changeSearchParam] = UseParameter();
+
   const pageNumber = searchParams.get("pageNumber") ? Number(searchParams.get("pageNumber")) : 0
   const pageSize = searchParams.get("pageSize") ? Number(searchParams.get("pageSize")) : 15
-  const [data, isLoading, isError] = UseMedicine(pageNumber, pageSize)
+  const search = searchParams.get("search") ? searchParams.get("search") : ""
+
+  const [data, isLoading, isError] = UseMedicine(pageNumber, pageSize, search ?? "")
+
 
   return (
     <>
+      <SearchBar searchValue={search ?? ""} changeSearchParam={changeSearchParam} suggestion={UseSearchMedicine} />
       {isLoading && <Spinner />}
       {!isError && !isLoading &&
         <div>

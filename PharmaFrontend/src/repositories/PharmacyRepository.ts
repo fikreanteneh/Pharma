@@ -35,7 +35,7 @@ export default class PharmacyRepository {
       .from("pharmacy")
       .select("*")
       .limit(payload.pageSize)
-      .ilike("name", `%${name}%`)
+      .ilike("name", `%${payload.search}%`)
       .range(
         payload.pageNumber * payload.pageSize,
         payload.pageNumber * payload.pageSize + payload.pageSize - 1

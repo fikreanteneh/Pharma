@@ -8,7 +8,6 @@ const UseParameter = (): [URLSearchParams, (target: string, value: number | stri
             return prevSearchParams
         })
     }
-    searchParams.get("pageNumber") ?? 0
 
     return [searchParams, changeSearchParam]
 }

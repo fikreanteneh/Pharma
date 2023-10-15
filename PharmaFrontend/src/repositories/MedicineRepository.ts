@@ -33,7 +33,7 @@ export default class MedicineRepository {
     );
   };
 
-  static searchMedicine = RequestSupabaseRepository.CatchAsyncErrors<
+  static getMedicine = RequestSupabaseRepository.CatchAsyncErrors<
     SearchMedicineRequest,
     Medicine[]
   >(async (payload): Promise<SupabaseResponse<Medicine[]>> => {
@@ -46,6 +46,24 @@ export default class MedicineRepository {
         payload.pageNumber * payload.pageSize,
         payload.pageNumber * payload.pageSize + payload.pageSize - 1
       );
+    return response;
+  });
+
+  static searchMedicine = RequestSupabaseRepository.CatchAsyncErrors<
+    SearchMedicineRequest,
+    Medicine[]
+  >(async (payload): Promise<SupabaseResponse<Medicine[]>> => {
+    const response: SupabaseResponse<Medicine[]> = await supabase
+      .from("medicine")
+      .select("*")
+      .limit(payload.pageSize)
+      .ilike("name", `%${payload.search}%`)
+      .range(
+        payload.pageNumber * payload.pageSize,
+        payload.pageNumber * payload.pageSize + payload.pageSize - 1
+      )
+      .not("name", "is", null);
+    console.log(response);
     return response;
   });
 

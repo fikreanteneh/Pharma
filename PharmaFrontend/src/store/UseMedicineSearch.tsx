@@ -17,7 +17,7 @@ const UseMedicineSearch = (): [
   const [search, setSearch] = useState<string>("")
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, refetch } = useInfiniteQuery(
     ['Medicine', search],
-    ({ pageParam = 0 }) => ReactQueryFetch(() => MedicineRepository.searchMedicine({ pageNumber: pageParam, pageSize, name: search })),
+    ({ pageParam = 0 }) => ReactQueryFetch(() => MedicineRepository.searchMedicine({ pageNumber: pageParam, pageSize, search: search })),
     { getNextPageParam: (lastPage, allPages) => lastPage.length < pageSize ? null : allPages.length }
   );
 
